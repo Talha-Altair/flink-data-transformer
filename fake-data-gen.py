@@ -23,8 +23,10 @@ def generate_data(num_rows):
     city_list = [fake.city() for _ in range(num_rows)]
     state_list = [fake.state() for _ in range(num_rows)]
     country_list = [fake.country() for _ in range(num_rows)]
+    id_list = [ i for i in range(num_rows)]
 
     df = pd.DataFrame({
+        'id': id_list,
         'name': name_list,
         'email': email_list,
         'city': city_list,
