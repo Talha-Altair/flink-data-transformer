@@ -54,8 +54,8 @@ if __name__ == '__main__':
 
     # df.to_csv('data/employee_data.csv', index=False)
 
-    df = generate_migration_date(NUM_MIGRATIONS)
+    # df = generate_migration_date(NUM_MIGRATIONS)
 
-    df.to_csv('data/migration_data.csv', index=False)
+    # df.to_csv('data/migration_data.csv', index=False)
 
     print("Done")
