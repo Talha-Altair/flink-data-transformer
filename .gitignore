@@ -1,0 +1,7 @@
+.vscode
+out.txt/*
+scetl_*.log
+
+dump-feb-2.log
+log.log
+.env

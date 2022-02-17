@@ -1,0 +1,2 @@
+apache-flink==1.14.3
+faker
