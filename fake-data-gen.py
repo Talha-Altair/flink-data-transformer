@@ -41,7 +41,7 @@ def generate_data(num_rows):
 
 def generate_migration_date(num_rows):
 
-    employee_id = [ random.randint(1, num_rows) for _ in range(num_rows)]
+    employee_id = [ random.randint(1, NUM_ROWS) for _ in range(num_rows)]
     new_city_list = [fake.city() for _ in range(num_rows)]
 
     df = pd.DataFrame({
