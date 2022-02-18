@@ -1,4 +1,7 @@
 """
+
+    Author: Altair
+
 	10 million employee records:
 		id, name, email, city, state, country.
 
@@ -7,7 +10,6 @@
 		change city to different city
 """
 
-from math import radians
 import faker
 import pandas as pd
 import random

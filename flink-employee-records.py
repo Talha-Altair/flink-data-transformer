@@ -14,8 +14,9 @@ PATH_TO_EMPLOYEE_DATA = './data/employee_data.csv'
 PATH_TO_MIGRATION_DATA = './data/migration_data.csv'
 NEW_DOMAIN_NAME = '@altair.com'
 
-pandas_df = pd.read_csv(PATH_TO_EMPLOYEE_DATA)
-migration_df = pd.read_csv(PATH_TO_MIGRATION_DATA)
+PANDAS_DF = pd.read_csv(PATH_TO_EMPLOYEE_DATA)
+MIGRATION_DF = pd.read_csv(PATH_TO_MIGRATION_DATA)
+
 
 class change_email(object):
 
@@ -31,6 +32,7 @@ class change_email(object):
 
         return email
 
+
 class change_city(object):
 
     def __init__(self):
@@ -39,7 +41,7 @@ class change_city(object):
 
     def __call__(self, employee_id, city):
 
-        required_df = migration_df[str(migration_df['employee_id']) == employee_id]
+        required_df = MIGRATION_DF[MIGRATION_DF['employee_id'] == employee_id]
 
         if required_df.empty:
 
@@ -53,8 +55,7 @@ def main():
     env_settings = EnvironmentSettings.in_streaming_mode()
     t_env = TableEnvironment.create(env_settings)
 
-    table = t_env.from_pandas(pandas_df)
-    # table_migration = t_env.from_pandas(migration_df)
+    table = t_env.from_pandas(PANDAS_DF)
 
     change_email_udf = udf(change_email(), result_type=DataTypes.STRING())
     change_city_udf = udf(change_city(), result_type=DataTypes.STRING())
@@ -63,23 +64,14 @@ def main():
     t_env.create_temporary_function("change_city", change_city_udf)
 
     t_env.create_temporary_view('employees', table)
-    # t_env.create_temporary_view('migrations', table_migration)
 
-    emaiL_updated_table = t_env.sql_query("SELECT id, name, change_email(email) as email , change_city(id, city), state, country \
+    emaiL_updated_table = t_env.sql_query("SELECT id, name, change_email(email) as email , change_city(id, city) as city, state, country \
                              FROM employees \
                             ")
 
-    # t_env.create_temporary_view('emaiL_updated_employees', emaiL_updated_table)
-
-    # if_statement = " IF (migrations.id = emaiL_updated_employees.id) "
-
-    # final_table = t_env.sql_query("SELECT id, name, email, IF(), state, country \
-    #                             FROM emaiL_updated_employees \
-    #                             ")
-
     result_df = emaiL_updated_table.to_pandas()
 
-    print(result_df)
+    result_df.to_csv('./data/employee_data_updated.csv', index=False)
 
     return 0
 
