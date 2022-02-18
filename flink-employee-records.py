@@ -37,9 +37,9 @@ class change_city(object):
 
         self.name = 'Altair'
 
-    def __call__(self, id, city):
+    def __call__(self, employee_id, city):
 
-        required_df = migration_df[str(migration_df['employee_id']) == id]
+        required_df = migration_df[str(migration_df['employee_id']) == employee_id]
 
         if required_df.empty:
 
